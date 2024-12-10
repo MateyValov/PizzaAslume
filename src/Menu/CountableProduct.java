@@ -3,32 +3,37 @@ package Menu;
 public class CountableProduct extends Product
 {
     protected int count;
-    //protected ProductSize size;
 
     public CountableProduct()
     {
         super();
         count = 0;
-        //size = ProductSize.DEFAULT;
     }
 
-    public CountableProduct(/*int inId, */String inName, float inPrice/*, ProductSize inSize*/)
+    public CountableProduct(String inName, float inPrice, boolean isProductVegan)
     {
-        //id = inId;
         name = inName;
         price = inPrice;
+        isVegan = isProductVegan;
         count = 0;
-        //size = inSize;
-    }
-
-    public ProductSize getProductSize()
-    {
-        return ProductSize.DEFAULT;
     }
 
     @Override
     public String toString()
     {
-        return /*id + " - " +*/ name + " - " /*+ size + " - "*/ + price + "lv";
+        return  name + " - " + isVegan + " - Amount in storage: " + count + " - " + price + "lv";
+    }
+
+    @Override
+    protected String getSQLColumns()
+    {
+        return "(`ProductName`, `ProductPrice`, `IsProductVegan`, `ProductQuantity`)";
+    }
+
+    @Override
+    protected String getSQLValues()
+    {
+        String output = "VALUES('%s', %.2f, %b, %d)";
+        return String.format(output, name, price, isVegan, count);
     }
 }
