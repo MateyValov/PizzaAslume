@@ -1,39 +1,30 @@
 package Menu;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu
 {
     private static String url;
+    private String schemaName;
+
     private Connection connection;
 
-    /*private ArrayList<Pizza> pizzas;
-    private ArrayList<CountableProduct> drinks;
-    private ArrayList<CountableProduct> sauces;
-    private ArrayList<CountableProduct> desserts;*/
-
-    private String schemaName;
-    private String drinksMenuTable;
-    private String saucesMenuTable;
-    private String dessertsMenuTable;
-    private String toppingsMenuTable;
+    private SubMenu drinksMenu;
+    private SubMenu saucesMenu;
+    private SubMenu dessertsMenu;
+    private SubMenu toppingsMenu;
 
     public Menu()
     {
         url = "jdbc:mysql://127.0.0.1:3306/menu_schema";
 
-        /*pizzas = new ArrayList<Pizza>();
-        drinks = new ArrayList<CountableProduct>();
-        sauces = new ArrayList<CountableProduct>();
-        desserts = new ArrayList<CountableProduct>();*/
-
         schemaName = "MENU_SCHEMA";
-        drinksMenuTable = "MENU_DRINKS";
-        saucesMenuTable = "MENU_SAUCES";
-        dessertsMenuTable = "MENU_DESSERTS";
-        toppingsMenuTable = "MENU_TOPPINGS";
+
+        drinksMenu = new SubMenu(schemaName, "Drinks", "MENU_DRINKS");
+        saucesMenu = new SubMenu(schemaName, "Sauces", "MENU_SAUCES");
+        dessertsMenu = new SubMenu(schemaName, "Desserts", "MENU_DESSERTS");
+        toppingsMenu = new SubMenu(schemaName, "Toppings", "MENU_TOPPINGS");
     }
 
     public void logIn(String user, String password) throws SQLException
@@ -41,45 +32,16 @@ public class Menu
         connection = DriverManager.getConnection(url, user, password);
     }
 
-    public void displayCountableProductTableContents(String tableName, String productType)
-    {
-        if(connection == null)
-        {
-            return;
-        }
-        try
-        {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + tableName);
-
-            System.out.println("==========" + productType.toUpperCase() + "==========");
-            while(resultSet.next())
-            {
-                System.out.print(resultSet.getString("Id") + " ");
-                System.out.print(resultSet.getString("ProductName") + " ");
-                System.out.print(resultSet.getString("ProductPrice") + " ");
-                System.out.print(resultSet.getString("IsProductVegan") + " ");
-                System.out.print(resultSet.getString("ProductQuantity") + " ");
-                System.out.println();
-            }
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-    }
-
     public void showMenu()
     {
-        displayCountableProductTableContents(drinksMenuTable, "Drinks");
-        displayCountableProductTableContents(saucesMenuTable, "Sauces");
-        displayCountableProductTableContents(dessertsMenuTable, "Desserts");
+        drinksMenu.displayContents(connection);
+        saucesMenu.displayContents(connection);
+        dessertsMenu.displayContents(connection);
     }
 
     public void showToppings()
     {
-        displayCountableProductTableContents(toppingsMenuTable, "Toppings");
+        toppingsMenu.displayContents(connection);
     }
 
     private CountableProduct createCountableProduct(Scanner scanner)
@@ -113,33 +75,40 @@ public class Menu
         }
     }
 
-    public void addDrinkToMenu(Scanner scanner)
+    public void manageDrinks(Scanner scanner)
     {
         if(scanner == null)
         {
             return;
         }
 
-        CountableProduct newDrink = createCountableProduct(scanner);
-        String queryTemplate = "INSERT INTO `%s`.`%s` %s %s";
-        String insertQuery = String.format(queryTemplate, schemaName, drinksMenuTable, newDrink.getSQLColumns(), newDrink.getSQLValues());
+        int input;
 
-        try
+        drinksMenu.displayContents(connection);
+        System.out.println("\nOptions:\n1 - Add new drink\n2 - Remove a drink\n3 - Return");
+        do
         {
-            if(connection == null)
-            {
-                return;
-            }
+            System.out.print(": ");
+            input = Integer.parseInt(scanner.nextLine());
+        }while(input < 1 || input > 3);
 
-            PreparedStatement statement = connection.prepareStatement(insertQuery);
-            statement.execute();
-        }
-        catch(SQLException e)
+        switch(input)
         {
-            e.printStackTrace();
-        }
+            case(1):
+                CountableProduct newDrink = createCountableProduct(scanner);
+                drinksMenu.addProductToSubMenu(connection, newDrink);
+                break;
 
-        //drinks.add(newDrink);
+            case(2):
+                do
+                {
+                    System.out.print("Enter index of product to be removed: ");
+                    input = Integer.parseInt(scanner.nextLine());
+                }while(input < 1 || input > drinksMenu.getNumberOfProducts(connection));
+
+                drinksMenu.removeProductFromMenu(connection, input);
+                break;
+        }
     }
 
     public void addSauceToMenu(Scanner scanner)
@@ -149,25 +118,33 @@ public class Menu
             return;
         }
 
-        CountableProduct newSauce = createCountableProduct(scanner);
-        String queryTemplate = "INSERT INTO `%s`.`%s` %s %s";
-        String insertQuery = String.format(queryTemplate, schemaName, saucesMenuTable, newSauce.getSQLColumns(), newSauce.getSQLValues());
+        int input;
 
-        try{
-            if(connection == null)
-            {
-                return;
-            }
-
-            PreparedStatement statement = connection.prepareStatement(insertQuery);
-            statement.execute();
-        }
-        catch(SQLException e)
+        saucesMenu.displayContents(connection);
+        System.out.println("\nOptions:\n1 - Add new sauce\n2 - Remove a sauce\n3 - Return");
+        do
         {
-            e.printStackTrace();
-        }
+            System.out.print(": ");
+            input = Integer.parseInt(scanner.nextLine());
+        }while(input < 1 || input > 3);
 
-        //sauces.add(newSauce);
+        switch(input)
+        {
+            case(1):
+                CountableProduct newSauce = createCountableProduct(scanner);
+                saucesMenu.addProductToSubMenu(connection, newSauce);
+                break;
+
+            case(2):
+                do
+                {
+                    System.out.print("Enter index of product to be removed: ");
+                    input = Integer.parseInt(scanner.nextLine());
+                }while(input < 1 || input > saucesMenu.getNumberOfProducts(connection));
+
+                saucesMenu.removeProductFromMenu(connection, input);
+                break;
+        }
     }
 
     public void addDessertToMenu(Scanner scanner)
@@ -177,26 +154,33 @@ public class Menu
             return;
         }
 
-        CountableProduct newDessert = createCountableProduct(scanner);
-        String queryTemplate = "INSERT INTO `%s`.`%s` %s %s";
-        String insertQuery = String.format(queryTemplate, schemaName, dessertsMenuTable, newDessert.getSQLColumns(), newDessert.getSQLValues());
+        int input;
 
-        try
+        dessertsMenu.displayContents(connection);
+        System.out.println("\nOptions:\n1 - Add new dessert\n2 - Remove a dessert\n3 - Return");
+        do
         {
-            if(connection == null)
-            {
-                return;
-            }
+            System.out.print(": ");
+            input = Integer.parseInt(scanner.nextLine());
+        }while(input < 1 || input > 3);
 
-            PreparedStatement statement = connection.prepareStatement(insertQuery);
-            statement.execute();
-        }
-        catch(SQLException e)
+        switch(input)
         {
-            e.printStackTrace();
-        }
+            case(1):
+                CountableProduct newDessert = createCountableProduct(scanner);
+                dessertsMenu.addProductToSubMenu(connection, newDessert);
+                break;
 
-        //sauces.add(newDessert);
+            case(2):
+                do
+                {
+                    System.out.print("Enter index of product to be removed: ");
+                    input = Integer.parseInt(scanner.nextLine());
+                }while(input < 1 || input > dessertsMenu.getNumberOfProducts(connection));
+
+                dessertsMenu.removeProductFromMenu(connection, input);
+                break;
+        }
     }
 
     public void addToppingToMenu(Scanner scanner)
@@ -206,23 +190,32 @@ public class Menu
             return;
         }
 
-        CountableProduct newTopping = createCountableProduct(scanner);
-        String queryTemplate = "INSERT INTO `%s`.`%s` %s %s";
-        String insertQuery = String.format(queryTemplate, schemaName, toppingsMenuTable, newTopping.getSQLColumns(), newTopping.getSQLValues());
+        int input;
 
-        try
+        toppingsMenu.displayContents(connection);
+        System.out.println("\nOptions:\n1 - Add new topping\n2 - Remove a topping\n3 - Return");
+        do
         {
-            if(connection == null)
-            {
-                return;
-            }
+            System.out.print(": ");
+            input = Integer.parseInt(scanner.nextLine());
+        }while(input < 1 || input > 3);
 
-            PreparedStatement statement = connection.prepareStatement(insertQuery);
-            statement.execute();
-        }
-        catch(SQLException e)
+        switch(input)
         {
-            e.printStackTrace();
+            case(1):
+                CountableProduct newTopping = createCountableProduct(scanner);
+                toppingsMenu.addProductToSubMenu(connection, newTopping);
+                break;
+
+            case(2):
+                do
+                {
+                    System.out.print("Enter index of product to be removed: ");
+                    input = Integer.parseInt(scanner.nextLine());
+                }while(input < 1 || input > toppingsMenu.getNumberOfProducts(connection));
+
+                toppingsMenu.removeProductFromMenu(connection, input);
+                break;
         }
     }
 }

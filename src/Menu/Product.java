@@ -29,19 +29,19 @@ public abstract class Product
     }
 
     @Override
-    public String toString()
-    {
+    public abstract String toString();
+    /*{
         return  name + " - " + isVegan + " - " + price + "lv";
-    }
+    }*/
 
-    protected String getSQLColumns()
-    {
+    protected abstract String getSQLColumns();
+    /*{
         return "(`ProductName`, `ProductPrice`, `IsProductVegan`)";
-    }
+    }*/
 
-    protected String getSQLValues()
-    {
+    protected abstract String getSQLValues();
+    /*{
         String output = "VALUES('%s', %.2f, %b)";
         return String.format(output, name, price, isVegan);
-    }
+    }*/
 }

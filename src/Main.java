@@ -40,8 +40,9 @@ public class Main
 
         while(true)
         {
-            System.out.print("\n===OPTIONS===\n1 - Display menu\n2 - Display list of toppings\n3 - Add new pizza\n4 - Add new drink\n" +
-                    "5 - Add new sauce\n6 - Add new dessert\n7 - Add new topping\n8 - Quit\n: ");
+
+            System.out.print("===OPTIONS===\n1 - Display menu\n2 - Display list of toppings\n3 - Manage pizzas\n4 - Manage drinks\n" +
+                    "5 - Manage sauces\n6 - Manage desserts\n7 - Manage toppings\n8 - Quit\n: ");
             input = Integer.parseInt(scanner.nextLine());
 
             switch (input)
@@ -56,7 +57,7 @@ public class Main
                     menu.addPizzaToMenu(scanner);
                     break;
                 case(4):
-                    menu.addDrinkToMenu(scanner);
+                    menu.manageDrinks(scanner);
                     break;
                 case(5):
                     menu.addSauceToMenu(scanner);
