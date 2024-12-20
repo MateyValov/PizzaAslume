@@ -32,7 +32,11 @@ public class Main
     public static void main(String[] args) throws SQLException
     {
         Scanner scanner = new Scanner(System.in);
-        menu = new Menu();
+
+
+
+
+        /*menu = new Menu();
 
         logIn(scanner);
 
@@ -40,9 +44,9 @@ public class Main
 
         while(true)
         {
-
-            System.out.print("===OPTIONS===\n1 - Display menu\n2 - Display list of toppings\n3 - Manage pizzas\n4 - Manage drinks\n" +
-                    "5 - Manage sauces\n6 - Manage desserts\n7 - Manage toppings\n8 - Quit\n: ");
+            System.out.println("===OPTIONS===\n1 - Display menu\n2 - Display list of toppings\n3 - Manage pizzas\n4 - Manage drinks\n" +
+                    "5 - Manage sauces\n6 - Manage desserts\n7 - Manage toppings\n8 - Quit");
+            System.out.print(": ");
             input = Integer.parseInt(scanner.nextLine());
 
             switch (input)
@@ -70,7 +74,8 @@ public class Main
                     break;
                 case(8):
                     return;
+
             }
-        }
+        }*/
     }
 }

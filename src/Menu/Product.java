@@ -2,15 +2,26 @@ package Menu;
 
 public abstract class Product
 {
+    protected int id;
     protected String name;
     protected float price;
     protected boolean isVegan;
+    protected boolean isAvailableToOrder;
 
     public Product()
     {
+        id = 0;
         name = "None";
         price = 0.00f;
         isVegan = false;
+        isAvailableToOrder = false;
+    }
+
+    public Product(StringBuilder dataStringBuilder) {}
+
+    public int getId()
+    {
+        return id;
     }
 
     public String getName()
@@ -28,20 +39,16 @@ public abstract class Product
         return isVegan;
     }
 
+    public boolean isProductAvailableToOrder()
+    {
+        return isAvailableToOrder;
+    }
+
     @Override
     public abstract String toString();
-    /*{
-        return  name + " - " + isVegan + " - " + price + "lv";
-    }*/
 
     protected abstract String getSQLColumns();
-    /*{
-        return "(`ProductName`, `ProductPrice`, `IsProductVegan`)";
-    }*/
 
     protected abstract String getSQLValues();
-    /*{
-        String output = "VALUES('%s', %.2f, %b)";
-        return String.format(output, name, price, isVegan);
-    }*/
+
 }
