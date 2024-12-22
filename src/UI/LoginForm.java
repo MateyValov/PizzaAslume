@@ -1,3 +1,5 @@
+package UI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +15,7 @@ public class LoginForm extends JDialog
     private JButton btn_LogIn;
     private JButton btn_Cancel;
     private JPanel logInPanel;
+    private JButton btn_Register;
 
     public User user;
 
@@ -22,7 +25,8 @@ public class LoginForm extends JDialog
 
         setTitle("Log in");
         setContentPane(logInPanel);
-        setMinimumSize(new Dimension(450, 474));
+        setMinimumSize(new Dimension(450, 475));
+        setResizable(false);
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -54,6 +58,14 @@ public class LoginForm extends JDialog
             public void actionPerformed(ActionEvent e)
             {
                 dispose();
+            }
+        });
+
+        btn_Register.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                RegistrationForm form = new RegistrationForm(null);
             }
         });
 
@@ -102,22 +114,6 @@ public class LoginForm extends JDialog
         }
 
         return user;
-    }
-
-    public static void main(String[] args)
-    {
-        LoginForm form = new LoginForm(null);
-        User user = form.user;
-
-        if(user != null)
-        {
-            System.out.printf("Authentication successful: %s %s - %s, Phone: %s, Address: %s",
-                    user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(), user.getAddress());
-        }
-        else
-        {
-            System.out.println("Authentication failed!");
-        }
     }
 }
 

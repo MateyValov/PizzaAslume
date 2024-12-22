@@ -12,14 +12,22 @@ public class CountableProduct extends Product
         count = 0;
     }
 
-    public CountableProduct(int id, String name, float price, boolean isVegan, boolean isAvailableToOrder, int count)
+    public CountableProduct(String name, float price, boolean isVegan, boolean isAvailableToOrder, int count)
     {
-        this.id = id;
         this.name = name;
         this.price = price;
         this.isVegan = isVegan;
         this.isAvailableToOrder = isAvailableToOrder;
         this.count = count;
+    }
+
+    public CountableProduct(String name, String price, String isVegan, String isAvailableToOrder, String count)
+    {
+        this.name = name;
+        this.price = Float.parseFloat(price);
+        this.isVegan = Boolean.parseBoolean(isVegan);
+        this.isAvailableToOrder = Boolean.parseBoolean(isAvailableToOrder);
+        this.count = Integer.parseInt(count);
     }
 
     public CountableProduct(StringBuilder dataStringBuilder)
@@ -48,7 +56,7 @@ public class CountableProduct extends Product
     public String toString()
     {
         String template = "#%d: %s - %.2flv., Amount in storage - %d, Is vegan - %b, Is available to order - %b";
-        return String.format(template, id, name, price, count, isVegan, isProductVegan());
+        return String.format(template, name, price, count, isVegan, isProductAvailableToOrder());
     }
 
     @Override

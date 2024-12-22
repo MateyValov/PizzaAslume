@@ -1,23 +1,24 @@
 package Menu;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Scanner;
+
+import UI.*;
 
 public class SubMenu
 {
     private String schemaName;
     private String productName;
+    private String productNamePlural;
     private String subMenuTableName;
 
     private String productClass;
 
-    private ArrayList<Product> products = new ArrayList<Product>();
-
-    public SubMenu(String schemaName, String productType, String subMenuTableName, String productClass)
+    public SubMenu(String schemaName, String productName, String productNamePlural, String subMenuTableName, String productClass)
     {
         this.schemaName = schemaName;
-        this.productName = productType;
+        this.productName = productName;
+        this.productNamePlural = productNamePlural;
         this.subMenuTableName = subMenuTableName;
         this.productClass = productClass;
     }
@@ -40,6 +41,16 @@ public class SubMenu
     public void setProductName(String productName)
     {
         this.productName = productName;
+    }
+
+    public String getProductNamePlural()
+    {
+        return productNamePlural;
+    }
+
+    public void setProductNamePlural(String productNamePlural)
+    {
+        this.productNamePlural = productNamePlural;
     }
 
     public String getSubMenuTableName()
@@ -86,7 +97,6 @@ public class SubMenu
                     dataStringBuilder.append(resultSet.getString(i));
                     dataStringBuilder.append("|");
                 }
-                products.add(new CountableProduct(dataStringBuilder));
             }
         }
         catch (SQLException e)
@@ -118,8 +128,7 @@ public class SubMenu
             switch(input) {
                 case (1):
                 {
-                    CountableProduct newProduct = Menu.createCountableProduct(scanner, getTableAutoIncrementValue(connection));
-                    addProductToSubMenu(connection, newProduct);
+                    addProductToSubMenu();
                     break;
                 }
 
@@ -189,10 +198,30 @@ public class SubMenu
 
     public void displayContents(Connection connection)
     {
-        System.out.println("==========" + productName.toUpperCase() + "==========");
-        for(Product product : products)
+        if(connection == null)
         {
-            System.out.println(product.toString());
+            return;
+        }
+        Statement statement;
+        ResultSet resultSet;
+        try
+        {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM " + subMenuTableName);
+            ResultSetMetaData rsMetaData = resultSet.getMetaData();
+            System.out.println("==========" + productNamePlural.toUpperCase() + "==========");
+            while(resultSet.next())
+            {
+                for(int i = 1; i <= rsMetaData.getColumnCount(); i++)
+                {
+                    System.out.print(resultSet.getString(i) + " ");
+                }
+                System.out.println();
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -281,28 +310,9 @@ public class SubMenu
         return doesExist;
     }
 
-    public void addProductToSubMenu(Connection connection, Product product)
+    public void addProductToSubMenu()
     {
-        products.add(product);
-
-        if(connection == null)
-        {
-            return;
-        }
-
-        PreparedStatement statement;
-
-        try
-        {
-            String queryTemplate = "INSERT INTO `%s`.`%s` %s %s";
-
-            statement = connection.prepareStatement(String.format(queryTemplate, schemaName, subMenuTableName, product.getSQLColumns(), product.getSQLValues()));
-            statement.execute();
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-        }
+        AddCountableProductForm form = new AddCountableProductForm(null, productName, subMenuTableName);
     }
 
     public void removeProductFromMenu(Connection connection, int productId)
@@ -393,8 +403,6 @@ public class SubMenu
             statement.execute();
             statement = connection.prepareStatement("DELETE FROM " + subMenuTableName);
             statement.execute();
-
-            products.clear();
         }
         catch(SQLException e)
         {

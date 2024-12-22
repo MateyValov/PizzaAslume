@@ -2,7 +2,6 @@ package Menu;
 
 public abstract class Product
 {
-    protected int id;
     protected String name;
     protected float price;
     protected boolean isVegan;
@@ -10,7 +9,6 @@ public abstract class Product
 
     public Product()
     {
-        id = 0;
         name = "None";
         price = 0.00f;
         isVegan = false;
@@ -18,11 +16,6 @@ public abstract class Product
     }
 
     public Product(StringBuilder dataStringBuilder) {}
-
-    public int getId()
-    {
-        return id;
-    }
 
     public String getName()
     {

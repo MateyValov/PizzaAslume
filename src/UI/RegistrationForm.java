@@ -1,3 +1,5 @@
+package UI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,8 +29,9 @@ public class RegistrationForm extends JDialog
         setTitle("Register");
         setContentPane(registerPanel);
 
-        Dimension dimension = (new Dimension(450, 330));
+        Dimension dimension = new Dimension(450, 475);
         setMinimumSize(dimension);
+        setResizable(false);
 
         setModal(true);
         setLocationRelativeTo(parent);
@@ -106,18 +109,31 @@ public class RegistrationForm extends JDialog
             Statement statement = connection.createStatement();
 
             final String usersDatatable = "user_data";
+
+            String checkEmailQuery = "SELECT * FROM " + usersDatatable + " WHERE Email = " + email;
+
+            PreparedStatement emailCheckPreparedStatement = connection.prepareStatement(checkEmailQuery);
+            ResultSet resultSet = emailCheckPreparedStatement.executeQuery();
+
+            if(resultSet.next())
+            {
+                JOptionPane.showMessageDialog(this, "A user with the same email address already exists!",
+                        "Try again", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+
             String insertQuery = "INSERT INTO " + usersDatatable + "(FirstName, LastName, Email, Phone, Address, Password)" +
                     " VALUES (?, ?, ?, ?, ?, ?)";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-            preparedStatement.setString(1, firstName);
-            preparedStatement.setString(2, lastName);
-            preparedStatement.setString(3, email);
-            preparedStatement.setString(4, phone);
-            preparedStatement.setString(5, address);
-            preparedStatement.setString(6, password);
+            PreparedStatement insertPreparedStatement = connection.prepareStatement(insertQuery);
+            insertPreparedStatement.setString(1, firstName);
+            insertPreparedStatement.setString(2, lastName);
+            insertPreparedStatement.setString(3, email);
+            insertPreparedStatement.setString(4, phone);
+            insertPreparedStatement.setString(5, address);
+            insertPreparedStatement.setString(6, password);
 
-            if(preparedStatement.executeUpdate() > 0)
+            if(insertPreparedStatement.executeUpdate() > 0)
             {
                 newUser = new User(firstName, lastName, email, phone, address, password);
             }
@@ -131,19 +147,5 @@ public class RegistrationForm extends JDialog
         }
 
         return newUser;
-    }
-
-    public static void main(String[] args)
-    {
-        RegistrationForm form = new RegistrationForm(null);
-        User user = form.user;
-
-        if(user != null)
-        {
-            System.out.println("User - " + user.getFirstName());
-        }
-        else {
-            System.out.println("Invalid user");
-        }
     }
 }

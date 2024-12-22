@@ -21,10 +21,10 @@ public class Menu
 
         schemaName = "MENU_SCHEMA";
 
-        drinksMenu = new SubMenu(schemaName, "Drinks", "MENU_DRINKS", "CountableProduct");
-        saucesMenu = new SubMenu(schemaName, "Sauces", "MENU_SAUCES", "CountableProduct");
-        dessertsMenu = new SubMenu(schemaName, "Desserts", "MENU_DESSERTS", "CountableProduct");
-        toppingsMenu = new SubMenu(schemaName, "Toppings", "MENU_TOPPINGS", "CountableProduct");
+        drinksMenu = new SubMenu(schemaName, "Drink", "Drinks","MENU_DRINKS", "CountableProduct");
+        saucesMenu = new SubMenu(schemaName, "Sauce", "Sauce", "MENU_SAUCES", "CountableProduct");
+        dessertsMenu = new SubMenu(schemaName, "Dessert", "Desserts", "MENU_DESSERTS", "CountableProduct");
+        toppingsMenu = new SubMenu(schemaName, "Topping", "Toppings",  "MENU_TOPPINGS", "CountableProduct");
     }
 
     public void logIn(String user, String password) throws SQLException
@@ -44,7 +44,7 @@ public class Menu
         toppingsMenu.displayContents(connection);
     }
 
-    protected static CountableProduct createCountableProduct(Scanner scanner, int productId)
+    protected static CountableProduct createCountableProduct(Scanner scanner)
     {
         if(scanner == null)
         {
@@ -96,7 +96,7 @@ public class Menu
             productQuantity = Integer.parseInt(scanner.nextLine());
         }while(productQuantity < 0);
 
-        return new CountableProduct(productId, productName, productPrice, isProductVegan, isProductAvailable, productQuantity);
+        return new CountableProduct(productName, productPrice, isProductVegan, isProductAvailable, productQuantity);
     }
 
     public void addPizzaToMenu(Scanner scanner)

@@ -1,4 +1,6 @@
 import Menu.Menu;
+import Registration.User;
+import UI.LoginForm;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -33,12 +35,23 @@ public class Main
     {
         Scanner scanner = new Scanner(System.in);
 
+        LoginForm form = new LoginForm(null);
+        User user = form.user;
 
+        /*if(user != null)
+        {
+            System.out.printf("Authentication successful: %s %s - %s, Phone: %s, Address: %s\n",
+                    user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(), user.getAddress());
+        }
+        else
+        {
+            System.out.println("Authentication failed!");
+        }*/
 
+        menu = new Menu();
 
-        /*menu = new Menu();
-
-        logIn(scanner);
+        //logIn(scanner);
+        menu.logIn("root", "pass");
 
         int input;
 
@@ -76,6 +89,6 @@ public class Main
                     return;
 
             }
-        }*/
+        }
     }
 }

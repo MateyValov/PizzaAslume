@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="UI.AddCountableProductForm">
+  <grid id="27dc6" binding="addProductPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="502" height="508"/>
+    </constraints>
+    <properties>
+      <background color="-1323908"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="13bea" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-7771579"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="8b378" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Bahnschrift" size="36" style="1"/>
+              <foreground color="-1323908"/>
+              <text value="Add a new"/>
+            </properties>
+          </component>
+          <component id="bacb1" class="javax.swing.JLabel" binding="lb_ProductName">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Bahnschrift" size="36" style="1"/>
+              <foreground color="-1323908"/>
+              <text value="ProductName"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="142b7" layout-manager="GridLayoutManager" row-count="12" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="10" left="25" bottom="10" right="25"/>
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1323908"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="e7125" class="javax.swing.JTextField" binding="tf_Name">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="198" height="34"/>
+              </grid>
+            </constraints>
+            <properties>
+              <horizontalAlignment value="10"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="2de01" class="javax.swing.JTextField" binding="tf_Price">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="198" height="34"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="9e16f" class="javax.swing.JTextField" binding="tf_Stock">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="198" height="34"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="e9a27" class="javax.swing.JCheckBox" binding="cb_IsAvailable">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="198" height="25"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-1323908"/>
+              <font name="Bahnschrift" size="14"/>
+              <foreground color="-12369608"/>
+              <text value="Is Available"/>
+            </properties>
+          </component>
+          <component id="2175b" class="javax.swing.JButton" binding="btn_Cancel">
+            <constraints>
+              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="198" height="34"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value="Cancel"/>
+            </properties>
+          </component>
+          <component id="11dd5" class="javax.swing.JButton" binding="btn_AddProduct">
+            <constraints>
+              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Add Product"/>
+            </properties>
+          </component>
+          <component id="e32e0" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="204" height="17"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Bahnschrift" size="14"/>
+              <foreground color="-12369608"/>
+              <horizontalAlignment value="10"/>
+              <text value="Name"/>
+            </properties>
+          </component>
+          <component id="4d292" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="204" height="17"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Bahnschrift" size="14"/>
+              <foreground color="-12369608"/>
+              <horizontalAlignment value="10"/>
+              <text value="Price"/>
+            </properties>
+          </component>
+          <component id="6cace" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="204" height="17"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Bahnschrift" size="14"/>
+              <foreground color="-12369608"/>
+              <horizontalAlignment value="10"/>
+              <text value="Stock"/>
+            </properties>
+          </component>
+          <component id="9d737" class="javax.swing.JCheckBox" binding="cb_IsVegan">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="198" height="25"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-1323908"/>
+              <font name="Bahnschrift" size="14"/>
+              <foreground color="-12369608"/>
+              <text value="Is Vegan"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
